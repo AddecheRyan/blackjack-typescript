@@ -13,6 +13,7 @@
     "clsx": "^2.1.1",
     "lucide-react": "^1.23.0",
     "mongodb": "^7.4.0",
+    "mongoose": "^9.7.3",
     "next": "16.2.9",
     "radix-ui": "^1.6.1",
     "react": "19.2.4",
