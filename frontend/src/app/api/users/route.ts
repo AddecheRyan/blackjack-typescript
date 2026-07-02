@@ -1,6 +1,5 @@
 import { NextResponse } from "next/server";
 import clientPromise from "@/lib/mongodb";
-import { Users2Icon } from "lucide-react";
 
 // Get all users
 export async function GET() {
