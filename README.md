@@ -10,7 +10,10 @@ https://www.mongodb.com/docs/drivers/node-frameworks/next-integration/
 
 ### Nextjs
 
-#### Setting up sessions
+#### API's that can be used with nextjs
+https://nextjs.org/docs/app/api-reference/edge#network-apis
+
+#### Setting up sessions + help with proxy.ts
 https://nextjs.org/docs/app/guides/authentication
 
 #### Web Sockets
