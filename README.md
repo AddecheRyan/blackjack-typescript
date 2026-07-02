@@ -8,6 +8,14 @@ https://oneuptime.com/blog/post/2026-03-31-mongodb-use-mongodb-with-nextjs-api-r
 
 https://www.mongodb.com/docs/drivers/node-frameworks/next-integration/
 
-### Setting up sessions
+### Nextjs
 
+#### Setting up sessions
 https://nextjs.org/docs/app/guides/authentication
+
+#### Web Sockets
+https://developer.mozilla.org/en-US/docs/Web/API/WebSocket
+
+### Shadcn component docs
+
+https://ui.shadcn.com/docs/components
