@@ -24,8 +24,36 @@ export function useGameSocket(roomId: string) {
         let cancelled = false
         let reconnectTimer: ReturnType<typeof setTimeout> | undefined
 
-        function connect() {
-            const ws = new WebSocket(WS_URL)
+        function scheduleReconnect() {
+            if (!cancelled) {
+                reconnectTimer = setTimeout(connect, RECONNECT_DELAY_MS)
+            }
+        }
+
+        async function fetchToken(): Promise<string | null> {
+            try {
+                const res = await fetch("/api/auth/ws-token")
+                if (!res.ok) return null
+                const data = await res.json()
+                return typeof data.token === "string" ? data.token : null
+            } catch {
+                return null
+            }
+        }
+
+        async function connect() {
+            // the game server may live on a different domain, where the session
+            // cookie isn't sent - so pass the token explicitly in the WS URL
+            const token = await fetchToken()
+            if (cancelled) return
+
+            if (token === null) {
+                setError("You must be logged in to join a game.")
+                scheduleReconnect()
+                return
+            }
+
+            const ws = new WebSocket(`${WS_URL}/?token=${encodeURIComponent(token)}`)
             wsRef.current = ws
 
             ws.onopen = () => {
@@ -65,9 +93,7 @@ export function useGameSocket(roomId: string) {
 
             ws.onclose = () => {
                 setConnected(false)
-                if (!cancelled) {
-                    reconnectTimer = setTimeout(connect, RECONNECT_DELAY_MS)
-                }
+                scheduleReconnect()
             }
         }
 

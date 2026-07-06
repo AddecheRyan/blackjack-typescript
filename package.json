@@ -1,0 +1,14 @@
+{
+  "name": "blackjack-typescript",
+  "version": "1.0.0",
+  "private": true,
+  "packageManager": "pnpm@10.21.0",
+  "scripts": {
+    "dev": "pnpm --parallel -r run dev",
+    "build": "pnpm -r run build",
+    "build:backend": "pnpm --filter backend run build",
+    "build:frontend": "pnpm --filter frontend run build",
+    "start:backend": "pnpm --filter backend run start",
+    "start:frontend": "pnpm --filter frontend run start"
+  }
+}

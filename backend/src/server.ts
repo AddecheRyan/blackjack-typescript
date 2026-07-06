@@ -53,10 +53,7 @@ function parse_cookies(header: string | undefined): Record<string, string> {
   return cookies;
 }
 
-async function authenticate(req: IncomingMessage): Promise<string | null> {
-  const token = parse_cookies(req.headers.cookie)["session"];
-  if (!token) return null;
-
+async function verify_token(token: string): Promise<string | null> {
   try {
     const { payload } = await jwtVerify(token, encodedKey, { algorithms: ["HS256"] });
     const username = payload.username;
@@ -64,6 +61,24 @@ async function authenticate(req: IncomingMessage): Promise<string | null> {
   } catch {
     return null;
   }
+}
+
+// the session token can arrive as a ?token= query param (works cross-domain,
+// e.g. separate Render services) or as the session cookie (same-site setups).
+async function authenticate(req: IncomingMessage): Promise<string | null> {
+  const url = new URL(req.url ?? "/", "http://localhost");
+  const queryToken = url.searchParams.get("token");
+  if (queryToken) {
+    const username = await verify_token(queryToken);
+    if (username !== null) return username;
+  }
+
+  const cookieToken = parse_cookies(req.headers.cookie)["session"];
+  if (cookieToken) {
+    return verify_token(cookieToken);
+  }
+
+  return null;
 }
 
 server.on("upgrade", async (req, socket, head) => {
