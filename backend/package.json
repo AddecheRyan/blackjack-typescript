@@ -14,9 +14,10 @@
   "license": "ISC",
   "packageManager": "pnpm@10.21.0",
   "dependencies": {
+    "@blackjack/shared": "workspace:*",
     "express": "^5.2.1",
-    "ws": "^8.21.0",
-    "@blackjack/shared": "workspace:*"
+    "jose": "^6.2.3",
+    "ws": "^8.21.0"
   },
   "devDependencies": {
     "@types/express": "^5.0.6",

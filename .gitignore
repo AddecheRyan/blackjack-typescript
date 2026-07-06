@@ -3,3 +3,7 @@
 .idea/
 .DS_Store
 node_modules
+
+# Environment secrets
+.env
+.env.local
